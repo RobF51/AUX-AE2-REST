@@ -64,15 +64,17 @@ public class Application implements CommandLineRunner {
 		
 		
 
-				String codeOpc = "";
+				int codeOpc = 0;
 				System.out.println("¿Qué desea hacer?: \n 1. Dar de alta un videojuego \n "
 						+ "2. Dar de baja un videojuego por ID \n " + "3. Modificar un videojuego por ID \n "
 						+ "4. Obtener un videojuego por ID \n " + "5. Listar todos los videojuegos \n" + "0. Salir \n");
 				System.out.println("CLIENTE: Introduzca la opcion");
-				codeOpc = sc.nextLine();
-				int codeOpcInt = Integer.parseInt(codeOpc);
+				codeOpc = sc.nextInt();
+				//int codeOpcInt = Integer.parseInt(codeOpc);
 
-				switch (codeOpcInt) {
+				int id=0;
+				
+				switch (codeOpc) {
 				case 0:
 					System.out.println("******************************************");
 					System.out.println("******** Parando el cliente REST *********");
@@ -82,65 +84,81 @@ public class Application implements CommandLineRunner {
 					break;
 
 				case 1:
-					
-					System.out.println("*********** ALTA VIDEOJUEGO ***************");
-					
-					
-					String nombre;
-					String comp;
-					int nota;
-					
-					System.out.println("CLIENTE: Introduzca un nombre ");
-					nombre = sc.nextLine();
-					System.out.println("CLIENTE: Introduzca una compania ");
-					comp = sc.nextLine();
-					System.out.println("CLIENTE: Introduzca una nota ");
-					nota = sc.nextInt();
 				
 					
-					
-					Videojuego v = new Videojuego();//ID: 0
-					v.setNombre(nombre);
-					v.setCompania(comp);
-					v.setNota(nota);
-					
-					//Videojuego.add(v);
-					
-					
-					Videojuego pAlta = spv.alta(v);
-					System.out.println("run -> Videojuego dada de alta " + pAlta);
+					Videojuego videojuego = new Videojuego();
+                    System.out.println("*********** ALTA VIDEOJUEGO ***************");
+                    
+                    System.out.println("Introduzca el ID del videojuego");
+                    int nuevoId = sc.nextInt();
+                    videojuego.setId(nuevoId);
+                    
+                    
+                    
+                    System.out.println("Introduzca el nombre del videojuego");
+                    String nuevoNombre = sc.nextLine();
+                    videojuego.setNombre(nuevoNombre);
+                    System.out.println("Introduzca la compania del videojuego");
+                    String nuevaCompania = sc.nextLine();
+                    videojuego.setCompania(nuevaCompania);
+                    System.out.println("Introduzca la nota del videojuego");
+                    int nuevaNota = sc.nextInt();
+                    videojuego.setNota(nuevaNota);
 
+                    Videojuego vAlta = spv.alta(videojuego);
+                    System.out.println("run -> Persona dada de alta " + vAlta);
+					
+                    continuar = true;
 				
 					break;
 				case 2:
 					
 
 					System.out.println("********** BORRAR VIDEOJUEGO **************");
-					boolean borrada = spv.borrar(pAlta.getId());
-					System.out.println("un -> Persona con id 5 borrada? " + borrada);
+					System.out.println("Introduzca un ID");
+					id = sc.nextInt();
+			
+					boolean borrada = spv.borrar(id);
+					System.out.println("un -> Persona con id " + id + " borrada? " + borrada);
 
 					//System.out.println("******** BORRAR PERSONAS ERRONEA *******");
 					//borrada = spv.borrar(20);
 					//System.out.println("run -> Persona con id 20 borrada? " + borrada);
-					
+					continuar = true;
 					break;
 				case 3:
-					System.out.println("********* MODIFICAR VIDEOJUEGO *************");
 					Videojuego vModificar = new Videojuego();
-					vModificar.setId(pAlta.getId());
-					vModificar.setNombre("AC");
-					vModificar.setCompania("Ubisoft");
-					vModificar.setNota(40);
-					boolean modificado = spv.modificar(vModificar);
-					System.out.println("run -> Videojuego modificado? " + modificado);
-					
+                    System.out.println("** MODIFICAR VIDEOJUEGO **");
+                    System.out.println("Introduzca el id del videojuego que quiere modificar");
+                    int idModif = sc.nextInt();
+                    vModificar.setId(idModif);
+
+                    System.out.println("Introduzca el nuevo nombre del videojuego");
+                    String nuevoNombreModif = sc.nextLine();
+                    vModificar.setNombre(nuevoNombreModif);
+                    System.out.println("Introduzca la nueva compania del videojuego");
+                    String nuevaCompaniaModif = sc.nextLine();
+                    vModificar.setCompania(nuevaCompaniaModif);
+                    System.out.println("Introduzca la nueva nota del videojuego");
+                    int nuevaNotaModif = sc.nextInt();
+                    vModificar.setNota(nuevaNotaModif);
+
+                    boolean modificada = spv.modificar(vModificar);
+                    
+                    System.out.println("run -> persona modificada con id " + idModif + ": " + modificada);
+                    
+                    continuar = true;
 					break;
 				case 4:
 					System.out.println("************ GET VIDEOJUEGO ***************");
-					v = spv.obtener(pAlta.getId());
-					System.out.println("run -> Videojuego con id " + pAlta.getId() + ": " + v);
 					
-
+					System.out.println("Introduzca un ID");
+					id = sc.nextInt();
+					
+					videojuego = spv.obtener(id);
+					System.out.println("run -> Videojuego con id " + id + ": " + videojuego);
+					
+					continuar = true;
 					break;
 				case 5:
 					
@@ -149,7 +167,7 @@ public class Application implements CommandLineRunner {
 					// Recorremos la lista y la imprimimos con funciones lambda
 					// Tambien podriamos haber usado un for-each clasico de java
 					listaVideojuegos.forEach((v) -> System.out.println(v));
-
+					continuar = true;
 					break;
 				default:
 					break;
