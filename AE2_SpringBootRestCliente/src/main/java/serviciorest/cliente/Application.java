@@ -87,6 +87,8 @@ public class Application implements CommandLineRunner {
 				
 					
 					Videojuego videojuego = new Videojuego();
+					
+					
                     System.out.println("*********** ALTA VIDEOJUEGO ***************");
                     
                     System.out.println("Introduzca el ID del videojuego");
@@ -94,8 +96,9 @@ public class Application implements CommandLineRunner {
                     videojuego.setId(nuevoId);
                     
                     
-                    
+                    sc.nextLine();
                     System.out.println("Introduzca el nombre del videojuego");
+                 
                     String nuevoNombre = sc.nextLine();
                     videojuego.setNombre(nuevoNombre);
                     System.out.println("Introduzca la compania del videojuego");
@@ -133,6 +136,7 @@ public class Application implements CommandLineRunner {
                     int idModif = sc.nextInt();
                     vModificar.setId(idModif);
 
+                    sc.nextLine();
                     System.out.println("Introduzca el nuevo nombre del videojuego");
                     String nuevoNombreModif = sc.nextLine();
                     vModificar.setNombre(nuevoNombreModif);
@@ -157,6 +161,7 @@ public class Application implements CommandLineRunner {
 					
 					videojuego = spv.obtener(id);
 					System.out.println("run -> Videojuego con id " + id + ": " + videojuego);
+					
 					
 					continuar = true;
 					break;
